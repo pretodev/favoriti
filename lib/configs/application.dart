@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:result_dart/result_dart.dart';
 
-typedef AppBuilder = FutureOr<Widget> Function();
-
 Future<void> buildApp({
   List<AppBootTask> tasks = const [],
-  required AppBuilder builder,
+  required Widget app,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -18,7 +16,6 @@ Future<void> buildApp({
     }
   }
 
-  final app = await builder();
   runApp(app);
 }
 

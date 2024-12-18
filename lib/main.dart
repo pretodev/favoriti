@@ -7,8 +7,7 @@ import 'configs/service_locator/service_locator.dart';
 import 'core/domain/product/product_repository.dart';
 import 'data/repositories/product_repository.dart';
 import 'data/services/api/api_client.dart';
-import 'ui/screens/home/home_store.dart';
-import 'ui/screens/home/widgets/home_screen.dart';
+import 'ui/routes.dart';
 import 'ui/styles/styles.dart';
 
 void main() async {
@@ -27,21 +26,19 @@ void main() async {
         },
       ),
     ],
-    builder: () => const MainApp(),
+    app: const MainApp(),
   );
 }
 
-class MainApp extends StatelessWidget with ServiceLocatorMixin {
+class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bemol App',
+    return MaterialApp.router(
+      title: 'Favoriti',
       theme: Styles.theme,
-      home: HomeScreen(
-        store: HomeStore(productRepository: instance()),
-      ),
+      routerConfig: Routes.routerConfig,
     );
   }
 }
