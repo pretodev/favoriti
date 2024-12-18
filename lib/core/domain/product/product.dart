@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import 'price.dart';
 import 'rating.dart';
 
 @immutable
 class Product extends Equatable {
   final int id;
   final String title;
-  final double price;
+  final Price price;
   final String category;
   final String description;
   final String imageUrl;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 part 'colors.dart';
 part 'extensions.dart';
@@ -7,16 +8,35 @@ part 'text.dart';
 @immutable
 class Styles extends ThemeExtension<Styles> {
   static ThemeData get theme {
-    final styles = Styles._();
+    final styles = Styles._(
+      text: TextStyles.main(),
+      colors: ColorStyles.main(),
+    );
 
     return ThemeData(
+      scaffoldBackgroundColor: styles.colors.scaffoldBackground,
+      appBarTheme: AppBarTheme(
+        elevation: 0,
+        titleTextStyle: styles.text.appTitle.copyWith(
+          color: styles.colors.body,
+        ),
+        backgroundColor: styles.colors.scaffoldBackground,
+        iconTheme: IconThemeData(
+          color: styles.colors.body,
+        ),
+      ),
+      textTheme: TextTheme(
+        titleSmall: styles.text.titleSmall,
+        bodyLarge: styles.text.bodyLarge,
+        bodyMedium: styles.text.bodyMedium,
+      ),
       extensions: [styles],
     );
   }
 
   const Styles._({
-    this.text = const TextStyles(),
-    this.colors = const ColorStyles(),
+    required this.text,
+    required this.colors,
   });
 
   final TextStyles text;
