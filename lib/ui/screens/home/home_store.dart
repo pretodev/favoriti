@@ -5,12 +5,12 @@ import '../../../core/domain/product/product_repository.dart';
 
 part 'home_store.g.dart';
 
-class HomeStore = _HomeStore with _$HomeStore;
+class HomeStore = HomeStoreBase with _$HomeStore;
 
-abstract class _HomeStore with Store {
+abstract class HomeStoreBase with Store {
   final ProductRepository _productRepository;
 
-  _HomeStore({
+  HomeStoreBase({
     required ProductRepository productRepository,
   }) : _productRepository = productRepository;
 
@@ -19,6 +19,22 @@ abstract class _HomeStore with Store {
 
   @observable
   bool loading = false;
+
+  @observable
+  String query = '';
+
+  @computed
+  List<Product> get filteredProducts {
+    if (query.isEmpty) {
+      return products;
+    }
+    return products
+        .where(
+          (product) =>
+              product.title.toLowerCase().contains(query.toLowerCase()),
+        )
+        .toList();
+  }
 
   @action
   void loadedProducts(List<Product> value) {
@@ -29,6 +45,11 @@ abstract class _HomeStore with Store {
   @action
   void loadingProducts() {
     loading = true;
+  }
+
+  @action
+  void setQuery(String value) {
+    query = value;
   }
 
   void loadProducts() async {

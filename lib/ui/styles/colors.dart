@@ -9,6 +9,7 @@ class ColorStyles {
       bodyLight: const Color(0xA637474F),
       scaffoldBackground: const Color(0xFFFBFCFF),
       divider: const Color(0xFFF0F0F0),
+      inputBackground: const Color(0xFFF0F1F2),
     );
   }
 
@@ -18,6 +19,7 @@ class ColorStyles {
     required this.bodyLight,
     required this.scaffoldBackground,
     required this.divider,
+    required this.inputBackground,
   });
 
   final Color primary;
@@ -28,6 +30,8 @@ class ColorStyles {
   final Color scaffoldBackground;
 
   final Color divider;
+
+  final Color inputBackground;
 
   static ColorStyles? lerp(ColorStyles? a, ColorStyles? b, double t) {
     if (identical(a, b)) {
@@ -43,6 +47,7 @@ class ColorStyles {
         t,
       )!,
       divider: Color.lerp(a.divider, b.divider, t)!,
+      inputBackground: Color.lerp(a.inputBackground, b.inputBackground, t)!,
     );
   }
 }

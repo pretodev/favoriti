@@ -8,9 +8,19 @@ part of 'home_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$HomeStore on _HomeStore, Store {
+mixin _$HomeStore on HomeStoreBase, Store {
+  Computed<List<Product>>? _$filteredProductsComputed;
+
+  @override
+  List<Product> get filteredProducts =>
+      (_$filteredProductsComputed ??= Computed<List<Product>>(
+        () => super.filteredProducts,
+        name: 'HomeStoreBase.filteredProducts',
+      ))
+          .value;
+
   late final _$productsAtom =
-      Atom(name: '_HomeStore.products', context: context);
+      Atom(name: 'HomeStoreBase.products', context: context);
 
   @override
   ObservableList<Product> get products {
@@ -25,7 +35,8 @@ mixin _$HomeStore on _HomeStore, Store {
     });
   }
 
-  late final _$loadingAtom = Atom(name: '_HomeStore.loading', context: context);
+  late final _$loadingAtom =
+      Atom(name: 'HomeStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -40,28 +51,57 @@ mixin _$HomeStore on _HomeStore, Store {
     });
   }
 
-  late final _$_HomeStoreActionController =
-      ActionController(name: '_HomeStore', context: context);
+  late final _$queryAtom = Atom(name: 'HomeStoreBase.query', context: context);
+
+  @override
+  String get query {
+    _$queryAtom.reportRead();
+    return super.query;
+  }
+
+  @override
+  set query(String value) {
+    _$queryAtom.reportWrite(value, super.query, () {
+      super.query = value;
+    });
+  }
+
+  late final _$HomeStoreBaseActionController =
+      ActionController(name: 'HomeStoreBase', context: context);
 
   @override
   void loadedProducts(List<Product> value) {
-    final _$actionInfo = _$_HomeStoreActionController.startAction(
-        name: '_HomeStore.loadedProducts');
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+      name: 'HomeStoreBase.loadedProducts',
+    );
     try {
       return super.loadedProducts(value);
     } finally {
-      _$_HomeStoreActionController.endAction(_$actionInfo);
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void loadingProducts() {
-    final _$actionInfo = _$_HomeStoreActionController.startAction(
-        name: '_HomeStore.loadingProducts');
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+      name: 'HomeStoreBase.loadingProducts',
+    );
     try {
       return super.loadingProducts();
     } finally {
-      _$_HomeStoreActionController.endAction(_$actionInfo);
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setQuery(String value) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+      name: 'HomeStoreBase.setQuery',
+    );
+    try {
+      return super.setQuery(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
@@ -69,7 +109,9 @@ mixin _$HomeStore on _HomeStore, Store {
   String toString() {
     return '''
 products: ${products},
-loading: ${loading}
+loading: ${loading},
+query: ${query},
+filteredProducts: ${filteredProducts}
     ''';
   }
 }

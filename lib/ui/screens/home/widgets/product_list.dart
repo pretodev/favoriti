@@ -11,7 +11,6 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(products);
     return SliverList.builder(
       itemCount: products.length,
       itemBuilder: (context, index) {
