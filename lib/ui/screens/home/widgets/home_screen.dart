@@ -16,8 +16,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with StoreLocatorMixin<HomeStore, HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with StoreMixin<HomeStore> {
   final _searchQueryDebouncer = Debouncer('');
   final _searchQueryController = TextEditingController();
 
@@ -33,6 +32,14 @@ class _HomeScreenState extends State<HomeScreen>
     _searchQueryDebouncer.addListener(() {
       _store.setQuery(_searchQueryDebouncer.value);
     });
+  }
+
+  @override
+  void dispose() {
+    _searchQueryController.dispose();
+    _searchQueryDebouncer.dispose();
+    storeDispose();
+    super.dispose();
   }
 
   @override

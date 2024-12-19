@@ -1,5 +1,4 @@
 import 'package:auto_injector/auto_injector.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -28,7 +27,7 @@ mixin ServiceLocatorMixin on Object {
   }
 }
 
-mixin StoreLocatorMixin<S extends Store, T extends StatefulWidget> on State<T> {
+mixin StoreMixin<S extends Store> {
   AutoInjector? _storeInjector;
 
   S store(Function constructor, {String? tag}) {
@@ -43,9 +42,7 @@ mixin StoreLocatorMixin<S extends Store, T extends StatefulWidget> on State<T> {
     return _storeInjector!.get<S>();
   }
 
-  @override
-  void dispose() {
+  void storeDispose() {
     _storeInjector?.dispose();
-    super.dispose();
   }
 }
