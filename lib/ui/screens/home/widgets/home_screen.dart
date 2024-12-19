@@ -6,9 +6,10 @@ import '../../../../configs/service_locator/service_locator.dart';
 import '../../../../core/domain/product/product.dart';
 import '../../../../shared/debouncer.dart';
 import '../../../routes.dart';
+import '../../../styles/styles.dart';
+import '../../../widgets/product_list_item.dart';
 import '../home_store.dart';
 import 'product_filter_delegate.dart';
-import 'product_list_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,12 +50,19 @@ class _HomeScreenState extends State<HomeScreen> with StoreMixin<HomeStore> {
 
   @override
   Widget build(BuildContext context) {
+    final Styles(:colors) = context.styles;
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
               title: const Text('Products'),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.favorite_border, color: colors.body),
+                  onPressed: () => context.push(Routes.favorites),
+                ),
+              ],
             ),
             SliverPersistentHeader(
               pinned: true,
@@ -71,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> with StoreMixin<HomeStore> {
                     final product = products[index];
                     return ProductListItem(
                       product: product,
+                      favControl: true,
                       onClicked: () => _showProduct(product),
                     );
                   },

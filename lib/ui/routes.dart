@@ -2,15 +2,18 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../configs/service_locator/service_locator.dart';
+import 'screens/favorite/widgets/favorites_screen.dart';
 import 'screens/home/widgets/home_screen.dart';
 import 'screens/product_details/widgets/product_details_screen.dart';
 
 final class Routes with ServiceLocatorMixin {
   static const _products = 'products';
+  static const _favorites = 'favorites';
 
   static const home = '/';
   static const products = '/$_products';
   static String productDetails(int id) => '/$_products/$id';
+  static const favorites = '/$_favorites';
 
   static GoRouter get routerConfig => Routes._()._router;
 
@@ -34,6 +37,10 @@ final class Routes with ServiceLocatorMixin {
             final id = int.parse(state.pathParameters['id']!);
             return ProductDetailsScreen(productId: id);
           },
+        ),
+        GoRoute(
+          path: favorites,
+          builder: (context, state) => FavoritesScreen(),
         ),
       ],
     );

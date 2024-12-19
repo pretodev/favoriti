@@ -1,20 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/domain/product/product.dart';
-import '../../../styles/styles.dart';
-import '../../../widgets/favorite_product_button.dart';
-import '../../../widgets/rating_view.dart';
+import '../../core/domain/product/product.dart';
+import '../styles/styles.dart';
+import 'favorite_product_button.dart';
+import 'rating_view.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
     super.key,
     required this.product,
     this.onClicked,
+    this.favControl = false,
   });
 
   final Product product;
   final VoidCallback? onClicked;
+  final bool favControl;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,9 @@ class ProductListItem extends StatelessWidget {
                             rate: product.rating.rate,
                             count: product.rating.count,
                           ),
-                          FavoriteProductButton(product: product),
+                          favControl
+                              ? FavoriteProductButton(product: product)
+                              : const SizedBox(),
                         ],
                       ),
                       SizedBox(height: 8.0),
