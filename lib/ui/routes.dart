@@ -30,7 +30,10 @@ final class Routes with ServiceLocatorMixin {
         ),
         GoRoute(
           path: '$products/:id',
-          builder: (context, state) => const ProductDetailsScreen(),
+          builder: (context, state) {
+            final id = int.parse(state.pathParameters['id']!);
+            return ProductDetailsScreen(productId: id);
+          },
         ),
       ],
     );

@@ -15,4 +15,9 @@ class StoreProductRepository implements ProductRepository {
   AsyncResult<List<Product>> getProducts() {
     return _apiClient.getProducts();
   }
+
+  @override
+  AsyncResult<Product> getProduct(int productId) {
+    return _apiClient.getProductById(productId);
+  }
 }

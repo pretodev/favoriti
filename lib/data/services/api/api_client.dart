@@ -17,4 +17,10 @@ class ApiClient {
     final products = Mapper.it(response.data, ApiProductMapper()).toList();
     return Success(products);
   }
+
+  AsyncResult<Product> getProductById(int id) async {
+    final response = await _client.get('/products/$id');
+    final product = ApiProductMapper().map(response.data);
+    return Success(product);
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../configs/service_locator/service_locator.dart';
+import '../../../../core/domain/product/product.dart';
 import '../../../../shared/debouncer.dart';
 import '../../../routes.dart';
 import '../home_store.dart';
@@ -21,6 +22,10 @@ class _HomeScreenState extends State<HomeScreen> with StoreMixin<HomeStore> {
   final _searchQueryController = TextEditingController();
 
   late final _store = store(HomeStore.new);
+
+  void _showProduct(Product product) {
+    context.push(Routes.productDetails(product.id), extra: product);
+  }
 
   @override
   void initState() {
@@ -66,8 +71,7 @@ class _HomeScreenState extends State<HomeScreen> with StoreMixin<HomeStore> {
                     final product = products[index];
                     return ProductListItem(
                       product: product,
-                      onClicked: () =>
-                          context.push(Routes.productDetails(product.id)),
+                      onClicked: () => _showProduct(product),
                     );
                   },
                 );

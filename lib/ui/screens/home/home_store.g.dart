@@ -12,12 +12,10 @@ mixin _$HomeStore on HomeStoreBase, Store {
   Computed<List<Product>>? _$filteredProductsComputed;
 
   @override
-  List<Product> get filteredProducts =>
-      (_$filteredProductsComputed ??= Computed<List<Product>>(
-        () => super.filteredProducts,
-        name: 'HomeStoreBase.filteredProducts',
-      ))
-          .value;
+  List<Product> get filteredProducts => (_$filteredProductsComputed ??=
+          Computed<List<Product>>(() => super.filteredProducts,
+              name: 'HomeStoreBase.filteredProducts'))
+      .value;
 
   late final _$productsAtom =
       Atom(name: 'HomeStoreBase.products', context: context);
@@ -72,8 +70,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   @override
   void loadedProducts(List<Product> value) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-      name: 'HomeStoreBase.loadedProducts',
-    );
+        name: 'HomeStoreBase.loadedProducts');
     try {
       return super.loadedProducts(value);
     } finally {
@@ -84,8 +81,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   @override
   void loadingProducts() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-      name: 'HomeStoreBase.loadingProducts',
-    );
+        name: 'HomeStoreBase.loadingProducts');
     try {
       return super.loadingProducts();
     } finally {
@@ -96,8 +92,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   @override
   void setQuery(String value) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-      name: 'HomeStoreBase.setQuery',
-    );
+        name: 'HomeStoreBase.setQuery');
     try {
       return super.setQuery(value);
     } finally {

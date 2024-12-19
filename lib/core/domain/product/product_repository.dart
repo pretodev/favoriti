@@ -4,4 +4,6 @@ import 'product.dart';
 
 abstract interface class ProductRepository {
   AsyncResult<List<Product>> getProducts();
+
+  AsyncResult<Product> getProduct(int productId);
 }

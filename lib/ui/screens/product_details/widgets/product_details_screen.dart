@@ -1,7 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+import '../../../../configs/service_locator/service_locator.dart';
+import '../product_details_store.dart';
+import 'product_details_body.dart';
+
+class ProductDetailsScreen extends StatefulWidget {
+  const ProductDetailsScreen({
+    super.key,
+    required this.productId,
+  });
+
+  final int productId;
+
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen>
+    with StoreMixin<ProductDetailsStore> {
+  late final _store = store(ProductDetailsStore.new);
+
+  @override
+  void initState() {
+    super.initState();
+    _store.loadProduct(widget.productId);
+  }
+
+  @override
+  void dispose() {
+    storeDispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +39,18 @@ class ProductDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Product Details'),
       ),
-      body: Container(),
+      body: Observer(
+        builder: (context) {
+          if (_store.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SingleChildScrollView(
+            child: ProductDetailsBody(product: _store.product!),
+          );
+        },
+      ),
     );
   }
 }

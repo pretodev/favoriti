@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/domain/product/product.dart';
 import '../../../styles/styles.dart';
+import '../../../widgets/rating_view.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
@@ -37,16 +38,9 @@ class ProductListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(product.title, style: text.bodyLarge),
-                      Row(
-                        spacing: 8.0,
-                        children: [
-                          Icon(Icons.star, color: Color(0xFFFFD700)),
-                          Text(
-                            '${product.rating.rate} (${product.rating.count} reviews)',
-                            style: text.bodyLarge
-                                .copyWith(color: colors.bodyLight),
-                          ),
-                        ],
+                      RatingView(
+                        rate: product.rating.rate,
+                        count: product.rating.count,
                       ),
                       SizedBox(height: 8.0),
                       Text(
