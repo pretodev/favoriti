@@ -3,7 +3,6 @@
 import 'package:go_router/go_router.dart';
 
 import '../configs/service_locator/service_locator.dart';
-import 'screens/home/home_store.dart';
 import 'screens/home/widgets/home_screen.dart';
 import 'screens/product_details/widgets/product_details_screen.dart';
 
@@ -25,18 +24,12 @@ final class Routes with ServiceLocatorMixin {
       routes: [
         GoRoute(
           path: home,
-          builder: (context, state) {
-            return HomeScreen(
-              store: HomeStore(productRepository: instance()),
-            );
-          },
+          builder: (context, state) => const HomeScreen(),
         ),
         GoRoute(
           path: '${products}/:id',
-          builder: (context, state) {
-            return ProductDetailsScreen();
-          },
-        )
+          builder: (context, state) => const ProductDetailsScreen(),
+        ),
       ],
     );
   }
