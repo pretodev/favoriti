@@ -14,6 +14,7 @@ import 'data/services/local/local_favorite_product_list.dart';
 import 'ui/routes.dart';
 import 'ui/state/favorite_list_store.dart';
 import 'ui/styles/styles.dart';
+import 'ui/widgets/notificator.dart';
 
 void main() async {
   buildApp(
@@ -54,6 +55,12 @@ class MainApp extends StatelessWidget {
       title: 'Favoriti',
       theme: Styles.theme,
       routerConfig: Routes.routerConfig,
+      builder: (context, child) {
+        if (child == null) {
+          return const SizedBox();
+        }
+        return Notificator(child: child);
+      },
     );
   }
 }

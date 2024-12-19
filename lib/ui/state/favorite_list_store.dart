@@ -11,7 +11,8 @@ enum FavoriteListStoreState {
   loading,
   loaded,
   saving,
-  saved,
+  added,
+  removed,
   error,
 }
 
@@ -45,7 +46,11 @@ abstract class FavoriteListStoreBase with Store {
   }
 
   void saved(_) {
-    state = FavoriteListStoreState.saved;
+    if (prevProducts.length >= products.length) {
+      state = FavoriteListStoreState.removed;
+    } else {
+      state = FavoriteListStoreState.added;
+    }
   }
 
   @action
