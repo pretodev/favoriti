@@ -9,6 +9,7 @@ import 'data/repositories/product_repository.dart';
 import 'data/services/api/api_client.dart';
 import 'data/services/cache/cache_manager.dart';
 import 'ui/routes.dart';
+import 'ui/state/favorite_list_store.dart';
 import 'ui/styles/styles.dart';
 
 void main() async {
@@ -25,6 +26,9 @@ void main() async {
 
           // repositories
           i.addLazySingleton<ProductRepository>(StoreProductRepository.new);
+
+          // global stores
+          i.addLazySingleton(FavoriteListStore.new);
         },
       ),
     ],

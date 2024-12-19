@@ -12,12 +12,12 @@ class RatingView extends StatelessWidget {
   Widget build(BuildContext context) {
     final Styles(:text, :colors) = context.styles;
     return Row(
-      spacing: 8.0,
+      spacing: 4.0,
       children: [
         Icon(Icons.star, color: Color(0xFFFFD700)),
         Text(
           '$rate ($count reviews)',
-          style: text.bodyLarge.copyWith(color: colors.bodyLight),
+          style: text.bodyMedium.copyWith(color: colors.bodyLight),
         ),
       ],
     );

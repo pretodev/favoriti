@@ -11,6 +11,7 @@ class ColorStyles {
       scaffoldBackground: const Color(0xFFFBFCFF),
       divider: const Color(0xFFF0F0F0),
       inputBackground: const Color(0xFFF0F1F2),
+      likeButtonEnabled: const Color(0xFFFF0000),
     );
   }
 
@@ -22,6 +23,7 @@ class ColorStyles {
     required this.scaffoldBackground,
     required this.divider,
     required this.inputBackground,
+    required this.likeButtonEnabled,
   });
 
   final Color primary;
@@ -35,6 +37,8 @@ class ColorStyles {
   final Color divider;
 
   final Color inputBackground;
+
+  final Color likeButtonEnabled;
 
   static ColorStyles? lerp(ColorStyles? a, ColorStyles? b, double t) {
     if (identical(a, b)) {
@@ -52,6 +56,8 @@ class ColorStyles {
       )!,
       divider: Color.lerp(a.divider, b.divider, t)!,
       inputBackground: Color.lerp(a.inputBackground, b.inputBackground, t)!,
+      likeButtonEnabled:
+          Color.lerp(a.likeButtonEnabled, b.likeButtonEnabled, t)!,
     );
   }
 }

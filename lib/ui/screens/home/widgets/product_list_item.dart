@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/domain/product/product.dart';
 import '../../../styles/styles.dart';
+import '../../../widgets/favorite_product_button.dart';
 import '../../../widgets/rating_view.dart';
 
 class ProductListItem extends StatelessWidget {
@@ -25,22 +26,29 @@ class ProductListItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
-              spacing: 18.0,
+              spacing: 10.0,
               children: [
                 CachedNetworkImage(
                   imageUrl: product.imageUrl,
-                  width: 120.0,
-                  height: 120.0,
+                  width: 100.0,
+                  height: 100.0,
                 ),
-                Flexible(
+                Expanded(
                   child: Column(
                     spacing: 1.0,
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(product.title, style: text.bodyLarge),
-                      RatingView(
-                        rate: product.rating.rate,
-                        count: product.rating.count,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RatingView(
+                            rate: product.rating.rate,
+                            count: product.rating.count,
+                          ),
+                          FavoriteProductButton(product: product),
+                        ],
                       ),
                       SizedBox(height: 8.0),
                       Text(
