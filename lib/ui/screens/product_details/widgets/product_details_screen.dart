@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../configs/service_locator/service_locator.dart';
+import '../../../widgets/favorite_product_button.dart';
 import '../product_details_store.dart';
 import 'product_details_body.dart';
 
@@ -38,6 +39,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text('Product Details'),
+        actions: [
+          Observer(
+            builder: (context) {
+              if (_store.product == null) {
+                return const SizedBox();
+              }
+              return FavoriteProductButton(product: _store.product!);
+            },
+          ),
+        ],
       ),
       body: Observer(
         builder: (context) {
