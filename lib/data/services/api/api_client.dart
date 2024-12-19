@@ -1,26 +1,25 @@
 import 'package:dio/dio.dart';
-import 'package:result_dart/result_dart.dart';
 
 import '../../../configs/environment.dart';
 import '../../../core/domain/product/product.dart';
-import '../../mapper.dart';
-import 'mappers/api_product_mapper.dart';
+import 'converters/api_product_converters.dart';
 
 class ApiClient {
+  ApiClient(
+    Environment environment,
+  ) : _client = Dio(BaseOptions(baseUrl: environment.apiBaseUrl));
+
   final Dio _client;
 
-  ApiClient(Environment environment)
-      : _client = Dio(BaseOptions(baseUrl: environment.apiBaseUrl));
+  final _productConverters = ApiProductConverters();
 
-  AsyncResult<List<Product>> getProducts() async {
+  Future<List<Product>> getProducts() async {
     final response = await _client.get('/products');
-    final products = Mapper.it(response.data, ApiProductMapper()).toList();
-    return Success(products);
+    return _productConverters.fromMap.convertAll(response.data);
   }
 
-  AsyncResult<Product> getProductById(int id) async {
+  Future<Product> getProductById(int id) async {
     final response = await _client.get('/products/$id');
-    final product = ApiProductMapper().map(response.data);
-    return Success(product);
+    return _productConverters.fromMap(response.data ?? {});
   }
 }

@@ -3,21 +3,37 @@ import 'package:result_dart/result_dart.dart';
 import '../../core/domain/product/product.dart';
 import '../../core/domain/product/product_repository.dart';
 import '../services/api/api_client.dart';
+import '../services/cache/cache_manager.dart';
 
 class StoreProductRepository implements ProductRepository {
-  final ApiClient _apiClient;
-
   StoreProductRepository({
     required ApiClient apiClient,
-  }) : _apiClient = apiClient;
+    required CacheManager cacheManager,
+  })  : _apiClient = apiClient,
+        _cacheManager = cacheManager;
+
+  final ApiClient _apiClient;
+  final CacheManager _cacheManager;
+
+  static const _cacheDuration = Duration(minutes: 5);
 
   @override
-  AsyncResult<List<Product>> getProducts() {
-    return _apiClient.getProducts();
+  AsyncResult<List<Product>> getProducts() async {
+    final products = await _apiClient.getProducts();
+    for (final product in products) {
+      await _cacheManager.saveProduct(product, _cacheDuration);
+    }
+    return Success(products);
   }
 
   @override
-  AsyncResult<Product> getProduct(int productId) {
-    return _apiClient.getProductById(productId);
+  AsyncResult<Product> getProduct(int productId) async {
+    final cached = await _cacheManager.getProduct(productId);
+    if (cached != null && cached.expireAt.isAfter(DateTime.now())) {
+      return Success(cached.value);
+    }
+    final remote = await _apiClient.getProductById(productId);
+    await _cacheManager.saveProduct(remote, _cacheDuration);
+    return Success(remote);
   }
 }

@@ -7,6 +7,7 @@ import 'configs/service_locator/service_locator.dart';
 import 'core/domain/product/product_repository.dart';
 import 'data/repositories/product_repository.dart';
 import 'data/services/api/api_client.dart';
+import 'data/services/cache/cache_manager.dart';
 import 'ui/routes.dart';
 import 'ui/styles/styles.dart';
 
@@ -20,6 +21,7 @@ void main() async {
 
           // services
           i.addLazySingleton(ApiClient.new);
+          i.addLazySingleton(CacheManager.new);
 
           // repositories
           i.addLazySingleton<ProductRepository>(StoreProductRepository.new);
