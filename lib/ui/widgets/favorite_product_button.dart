@@ -28,7 +28,6 @@ class _FavoriteProductButtonState extends State<FavoriteProductButton>
     return Observer(
       builder: (context) {
         return IconButton(
-          onPressed: () => _favoriteListStore.toggleProduct(widget.product),
           icon: _favoriteListStore.hasProduct(widget.product)
               ? Icon(
                   Icons.favorite,
@@ -40,6 +39,7 @@ class _FavoriteProductButtonState extends State<FavoriteProductButton>
                   color: colors.bodyLight,
                   size: 18.0,
                 ),
+          onPressed: () => _favoriteListStore.toggleProduct(widget.product),
         );
       },
     );

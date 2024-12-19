@@ -28,7 +28,7 @@ abstract class ProductDetailsStoreBase with Store {
 
   void loadProduct(int productId) async {
     loading = true;
-    final result = await _productRepository.getProduct(productId);
+    final result = await _productRepository.getFromId(productId);
     result.onSuccess(productLoaded);
   }
 }

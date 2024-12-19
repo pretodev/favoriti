@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import 'price.dart';
-import 'rating.dart';
+import '../commom/price.dart';
+import '../commom/rating.dart';
 
 @immutable
 class Product extends Equatable {

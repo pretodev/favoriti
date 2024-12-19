@@ -54,7 +54,7 @@ abstract class HomeStoreBase with Store {
 
   void loadProducts() async {
     loadingProducts();
-    final result = await _productRepository.getProducts();
+    final result = await _productRepository.getAll();
     result.onSuccess(loadedProducts);
   }
 }

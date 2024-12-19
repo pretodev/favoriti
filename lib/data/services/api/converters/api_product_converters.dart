@@ -1,6 +1,6 @@
-import '../../../../core/domain/product/price.dart';
+import '../../../../core/domain/commom/price.dart';
+import '../../../../core/domain/commom/rating.dart';
 import '../../../../core/domain/product/product.dart';
-import '../../../../core/domain/product/rating.dart';
 import '../../../converter.dart';
 
 class ApiProductConverters {

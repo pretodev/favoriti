@@ -5,8 +5,8 @@ import '../../core/domain/product/product_repository.dart';
 import '../services/api/api_client.dart';
 import '../services/cache/cache_manager.dart';
 
-class StoreProductRepository implements ProductRepository {
-  StoreProductRepository({
+class ProductRepositoryImpl implements ProductRepository {
+  ProductRepositoryImpl({
     required ApiClient apiClient,
     required CacheManager cacheManager,
   })  : _apiClient = apiClient,
@@ -18,7 +18,7 @@ class StoreProductRepository implements ProductRepository {
   static const _cacheDuration = Duration(minutes: 5);
 
   @override
-  AsyncResult<List<Product>> getProducts() async {
+  AsyncResult<List<Product>> getAll() async {
     final products = await _apiClient.getProducts();
     for (final product in products) {
       await _cacheManager.saveProduct(product, _cacheDuration);
@@ -27,7 +27,7 @@ class StoreProductRepository implements ProductRepository {
   }
 
   @override
-  AsyncResult<Product> getProduct(int productId) async {
+  AsyncResult<Product> getFromId(int productId) async {
     final cached = await _cacheManager.getProduct(productId);
     if (cached != null && cached.expireAt.isAfter(DateTime.now())) {
       return Success(cached.value);

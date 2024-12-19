@@ -25,15 +25,96 @@ mixin _$FavoriteListStore on FavoriteListStoreBase, Store {
     });
   }
 
+  late final _$prevProductsAtom =
+      Atom(name: 'FavoriteListStoreBase.prevProducts', context: context);
+
+  @override
+  ObservableList<Product> get prevProducts {
+    _$prevProductsAtom.reportRead();
+    return super.prevProducts;
+  }
+
+  @override
+  set prevProducts(ObservableList<Product> value) {
+    _$prevProductsAtom.reportWrite(value, super.prevProducts, () {
+      super.prevProducts = value;
+    });
+  }
+
+  late final _$stateAtom =
+      Atom(name: 'FavoriteListStoreBase.state', context: context);
+
+  @override
+  FavoriteListStoreState get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(FavoriteListStoreState value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
+    });
+  }
+
+  late final _$errorMessageAtom =
+      Atom(name: 'FavoriteListStoreBase.errorMessage', context: context);
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   late final _$FavoriteListStoreBaseActionController =
       ActionController(name: 'FavoriteListStoreBase', context: context);
 
   @override
-  void setProducts(List<Product> newProducts) {
+  void loaded(List<Product> newProducts) {
     final _$actionInfo = _$FavoriteListStoreBaseActionController.startAction(
-        name: 'FavoriteListStoreBase.setProducts');
+        name: 'FavoriteListStoreBase.loaded');
     try {
-      return super.setProducts(newProducts);
+      return super.loaded(newProducts);
+    } finally {
+      _$FavoriteListStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void loading() {
+    final _$actionInfo = _$FavoriteListStoreBaseActionController.startAction(
+        name: 'FavoriteListStoreBase.loading');
+    try {
+      return super.loading();
+    } finally {
+      _$FavoriteListStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void saving(List<Product> newProducts) {
+    final _$actionInfo = _$FavoriteListStoreBaseActionController.startAction(
+        name: 'FavoriteListStoreBase.saving');
+    try {
+      return super.saving(newProducts);
+    } finally {
+      _$FavoriteListStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void error(Exception e) {
+    final _$actionInfo = _$FavoriteListStoreBaseActionController.startAction(
+        name: 'FavoriteListStoreBase.error');
+    try {
+      return super.error(e);
     } finally {
       _$FavoriteListStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -42,7 +123,10 @@ mixin _$FavoriteListStore on FavoriteListStoreBase, Store {
   @override
   String toString() {
     return '''
-products: ${products}
+products: ${products},
+prevProducts: ${prevProducts},
+state: ${state},
+errorMessage: ${errorMessage}
     ''';
   }
 }
