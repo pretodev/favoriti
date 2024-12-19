@@ -5,9 +5,14 @@ import 'package:go_router/go_router.dart';
 import '../configs/service_locator/service_locator.dart';
 import 'screens/home/home_store.dart';
 import 'screens/home/widgets/home_screen.dart';
+import 'screens/product_details/widgets/product_details_screen.dart';
 
 final class Routes with ServiceLocatorMixin {
+  static const _products = 'products';
+
   static const home = '/';
+  static const products = '/$_products';
+  static String productDetails(int id) => '/$_products/$id';
 
   static GoRouter get routerConfig => Routes._()._router;
 
@@ -26,6 +31,12 @@ final class Routes with ServiceLocatorMixin {
             );
           },
         ),
+        GoRoute(
+          path: '${products}/:id',
+          builder: (context, state) {
+            return ProductDetailsScreen();
+          },
+        )
       ],
     );
   }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../shared/debouncer.dart';
+import '../../../routes.dart';
 import '../home_store.dart';
 import 'product_filter_delegate.dart';
-import 'product_list.dart';
+import 'product_list_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -50,9 +52,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Observer(
-              builder: (context) => ProductList(
-                products: widget.store.filteredProducts,
-              ),
+              builder: (context) {
+                final products = widget.store.filteredProducts;
+                return SliverList.builder(
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    return ProductListItem(
+                      product: product,
+                      onClicked: () =>
+                          context.push(Routes.productDetails(product.id)),
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),
