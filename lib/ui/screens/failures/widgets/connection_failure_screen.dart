@@ -5,9 +5,10 @@ import '../../../routing/routes.dart';
 import '../../../state/connectivity/connectivity_store.dart';
 import '../../../state/connectivity/widgets/connectivity_builder.dart';
 import '../../../styles/styles.dart';
+import '../../../widgets/illustraction.dart';
 
-class ConectionFailureScreen extends StatelessWidget {
-  const ConectionFailureScreen({super.key});
+class ConnectionFailureScreen extends StatelessWidget {
+  const ConnectionFailureScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,11 @@ class ConectionFailureScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.wifi_off, size: 100),
+              Illustraction(
+                name: 'connection_failed',
+                width: 160.0,
+                height: 160.0,
+              ),
               Text(
                 'Something went wrong!',
                 style: text.bodyLarge.copyWith(

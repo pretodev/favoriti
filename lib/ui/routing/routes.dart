@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../screens/failures/widgets/conection_failure_screen.dart';
+import '../screens/failures/widgets/connection_failure_screen.dart';
 import '../screens/favorite/widgets/favorites_screen.dart';
 import '../screens/home/widgets/home_screen.dart';
 import '../screens/product_details/widgets/product_details_screen.dart';
@@ -52,7 +52,7 @@ final class Routes {
         ),
         GoRoute(
           path: failuresConnectivity,
-          builder: (context, state) => const ConectionFailureScreen(),
+          builder: (context, state) => const ConnectionFailureScreen(),
         ),
       ],
       refreshListenable: redirection,
