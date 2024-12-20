@@ -52,7 +52,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
       ),
       body: Observer(
         builder: (context) {
-          if (_store.loading) {
+          if (_store.status == ProductDetailsStatuses.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );

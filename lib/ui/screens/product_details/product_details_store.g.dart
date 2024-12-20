@@ -25,19 +25,35 @@ mixin _$ProductDetailsStore on ProductDetailsStoreBase, Store {
     });
   }
 
-  late final _$loadingAtom =
-      Atom(name: 'ProductDetailsStoreBase.loading', context: context);
+  late final _$statusAtom =
+      Atom(name: 'ProductDetailsStoreBase.status', context: context);
 
   @override
-  bool get loading {
-    _$loadingAtom.reportRead();
-    return super.loading;
+  ProductDetailsStatuses get status {
+    _$statusAtom.reportRead();
+    return super.status;
   }
 
   @override
-  set loading(bool value) {
-    _$loadingAtom.reportWrite(value, super.loading, () {
-      super.loading = value;
+  set status(ProductDetailsStatuses value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
+  late final _$errorMessageAtom =
+      Atom(name: 'ProductDetailsStoreBase.errorMessage', context: context);
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
     });
   }
 
@@ -45,11 +61,33 @@ mixin _$ProductDetailsStore on ProductDetailsStoreBase, Store {
       ActionController(name: 'ProductDetailsStoreBase', context: context);
 
   @override
-  void productLoaded(Product product) {
+  void loaded(Product product) {
     final _$actionInfo = _$ProductDetailsStoreBaseActionController.startAction(
-        name: 'ProductDetailsStoreBase.productLoaded');
+        name: 'ProductDetailsStoreBase.loaded');
     try {
-      return super.productLoaded(product);
+      return super.loaded(product);
+    } finally {
+      _$ProductDetailsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void loading() {
+    final _$actionInfo = _$ProductDetailsStoreBaseActionController.startAction(
+        name: 'ProductDetailsStoreBase.loading');
+    try {
+      return super.loading();
+    } finally {
+      _$ProductDetailsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void error(String message) {
+    final _$actionInfo = _$ProductDetailsStoreBaseActionController.startAction(
+        name: 'ProductDetailsStoreBase.error');
+    try {
+      return super.error(message);
     } finally {
       _$ProductDetailsStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -59,7 +97,8 @@ mixin _$ProductDetailsStore on ProductDetailsStoreBase, Store {
   String toString() {
     return '''
 product: ${product},
-loading: ${loading}
+status: ${status},
+errorMessage: ${errorMessage}
     ''';
   }
 }

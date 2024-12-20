@@ -7,6 +7,8 @@ part 'product_details_store.g.dart';
 
 class ProductDetailsStore = ProductDetailsStoreBase with _$ProductDetailsStore;
 
+enum ProductDetailsStatuses { none, loading, loaded, error }
+
 abstract class ProductDetailsStoreBase with Store {
   final CatalogRepository _productRepository;
 
@@ -18,17 +20,34 @@ abstract class ProductDetailsStoreBase with Store {
   Product? product;
 
   @observable
-  bool loading = false;
+  ProductDetailsStatuses status = ProductDetailsStatuses.none;
+
+  @observable
+  String errorMessage = '';
 
   @action
-  void productLoaded(Product product) {
+  void loaded(Product product) {
     this.product = product;
-    loading = false;
+    status = ProductDetailsStatuses.loaded;
+  }
+
+  @action
+  void loading() {
+    status = ProductDetailsStatuses.loading;
+    errorMessage = '';
+  }
+
+  @action
+  void error(String message) {
+    errorMessage = message;
+    status = ProductDetailsStatuses.error;
   }
 
   void loadProduct(int productId) async {
-    loading = true;
+    loading();
     final result = await _productRepository.getProductFromId(productId);
-    result.onSuccess(productLoaded);
+    result //
+        .onSuccess(loaded)
+        .onFailure((err) => error(err.toString()));
   }
 }
