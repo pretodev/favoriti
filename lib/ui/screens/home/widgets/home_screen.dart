@@ -10,6 +10,7 @@ import '../../../styles/styles.dart';
 import '../../../widgets/product_list_item.dart';
 import '../home_store.dart';
 import 'product_filter_delegate.dart';
+import 'product_list_skeleton.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -72,6 +73,10 @@ class _HomeScreenState extends State<HomeScreen> with StoreMixin<HomeStore> {
             ),
             Observer(
               builder: (context) {
+                if (_store.status == HomeStatuses.loading) {
+                  return const ProductListSkeleton();
+                }
+
                 final products = _store.filteredProducts;
                 return SliverList.builder(
                   itemCount: products.length,

@@ -34,6 +34,11 @@ class ProductListItem extends StatelessWidget {
                   imageUrl: product.imageUrl,
                   width: 100.0,
                   height: 100.0,
+                  errorWidget: (context, url, error) => Container(
+                    width: 100.0,
+                    height: 100.0,
+                    color: Colors.black12,
+                  ),
                 ),
                 Expanded(
                   child: Column(

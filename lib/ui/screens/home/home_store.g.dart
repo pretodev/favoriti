@@ -33,19 +33,35 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
-  late final _$loadingAtom =
-      Atom(name: 'HomeStoreBase.loading', context: context);
+  late final _$statusAtom =
+      Atom(name: 'HomeStoreBase.status', context: context);
 
   @override
-  bool get loading {
-    _$loadingAtom.reportRead();
-    return super.loading;
+  HomeStatuses get status {
+    _$statusAtom.reportRead();
+    return super.status;
   }
 
   @override
-  set loading(bool value) {
-    _$loadingAtom.reportWrite(value, super.loading, () {
-      super.loading = value;
+  set status(HomeStatuses value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
+  late final _$errorMessageAtom =
+      Atom(name: 'HomeStoreBase.errorMessage', context: context);
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
     });
   }
 
@@ -68,22 +84,33 @@ mixin _$HomeStore on HomeStoreBase, Store {
       ActionController(name: 'HomeStoreBase', context: context);
 
   @override
-  void loadedProducts(List<Product> value) {
+  void loading() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.loadedProducts');
+        name: 'HomeStoreBase.loading');
     try {
-      return super.loadedProducts(value);
+      return super.loading();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void loadingProducts() {
+  void loaded(List<Product> value) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.loadingProducts');
+        name: 'HomeStoreBase.loaded');
     try {
-      return super.loadingProducts();
+      return super.loaded(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void error(String message) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.error');
+    try {
+      return super.error(message);
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -104,7 +131,8 @@ mixin _$HomeStore on HomeStoreBase, Store {
   String toString() {
     return '''
 products: ${products},
-loading: ${loading},
+status: ${status},
+errorMessage: ${errorMessage},
 query: ${query},
 filteredProducts: ${filteredProducts}
     ''';

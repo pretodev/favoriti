@@ -7,6 +7,8 @@ part 'home_store.g.dart';
 
 class HomeStore = HomeStoreBase with _$HomeStore;
 
+enum HomeStatuses { none, loading, loaded, error, filtered }
+
 abstract class HomeStoreBase with Store {
   final CatalogRepository _productRepository;
 
@@ -18,7 +20,10 @@ abstract class HomeStoreBase with Store {
   ObservableList<Product> products = ObservableList();
 
   @observable
-  bool loading = false;
+  HomeStatuses status = HomeStatuses.none;
+
+  @observable
+  String errorMessage = '';
 
   @observable
   String query = '';
@@ -37,24 +42,34 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  void loadedProducts(List<Product> value) {
-    products = ObservableList.of(value);
-    loading = false;
+  void loading() {
+    status = HomeStatuses.loading;
+    errorMessage = '';
   }
 
   @action
-  void loadingProducts() {
-    loading = true;
+  void loaded(List<Product> value) {
+    products = ObservableList.of(value);
+    status = HomeStatuses.loaded;
+  }
+
+  @action
+  void error(String message) {
+    errorMessage = message;
+    status = HomeStatuses.error;
   }
 
   @action
   void setQuery(String value) {
     query = value;
+    status = HomeStatuses.filtered;
   }
 
   void loadProducts() async {
-    loadingProducts();
+    loading();
     final result = await _productRepository.getProducts();
-    result.onSuccess(loadedProducts);
+    result //
+        .onSuccess(loaded)
+        .onFailure((err) => error(err.toString()));
   }
 }
