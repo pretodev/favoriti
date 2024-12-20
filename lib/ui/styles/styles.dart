@@ -30,6 +30,16 @@ class Styles extends ThemeExtension<Styles> {
         bodyLarge: styles.text.bodyLarge,
         bodyMedium: styles.text.bodyMedium,
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(Color(0xFF3366CC)),
+          textStyle: WidgetStateProperty.all(
+            styles.text.bodyLarge.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
       extensions: [styles],
     );
   }

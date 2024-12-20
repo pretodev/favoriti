@@ -1,12 +1,12 @@
 import 'package:mobx/mobx.dart';
 import 'package:result_dart/result_dart.dart';
 
-import '../../core/domain/commom/product.dart';
-import '../../core/domain/favorite/favorite_repository.dart';
+import '../../../core/domain/commom/product.dart';
+import '../../../core/domain/favorite/favorite_repository.dart';
 
 part 'favorite_list_store.g.dart';
 
-enum FavoriteListStoreState {
+enum FavoriteListStatuses {
   none,
   loading,
   loaded,
@@ -34,29 +34,29 @@ abstract class FavoriteListStoreBase with Store {
   ObservableList<Product> prevProducts = ObservableList();
 
   @observable
-  FavoriteListStoreState state = FavoriteListStoreState.none;
+  FavoriteListStatuses status = FavoriteListStatuses.none;
 
   @observable
   String errorMessage = '';
 
   @action
   void loaded(List<Product> newProducts) {
-    state = FavoriteListStoreState.loaded;
+    status = FavoriteListStatuses.loaded;
     products = ObservableList.of(newProducts);
   }
 
   void saved(_) {
     if (prevProducts.length >= products.length) {
-      state = FavoriteListStoreState.removed;
+      status = FavoriteListStatuses.removed;
     } else {
-      state = FavoriteListStoreState.added;
+      status = FavoriteListStatuses.added;
     }
   }
 
   @action
   void loading() {
     prevProducts = ObservableList.of(products);
-    state = FavoriteListStoreState.loading;
+    status = FavoriteListStatuses.loading;
     errorMessage = '';
   }
 
@@ -64,13 +64,13 @@ abstract class FavoriteListStoreBase with Store {
   void saving(List<Product> newProducts) {
     prevProducts = ObservableList.of(products);
     products = ObservableList.of(newProducts);
-    state = FavoriteListStoreState.saving;
+    status = FavoriteListStatuses.saving;
     errorMessage = '';
   }
 
   @action
   void error(Exception e) {
-    state = FavoriteListStoreState.error;
+    status = FavoriteListStatuses.error;
     errorMessage = e.toString();
     products = ObservableList.of(prevProducts);
   }

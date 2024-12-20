@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../configs/service_locator/service_locator.dart';
-import '../../../widgets/favorite_product_button.dart';
+import '../../../state/favorite_list/widgets/favorite_product_button.dart';
 import '../product_details_store.dart';
 import 'product_details_body.dart';
 

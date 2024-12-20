@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../../configs/service_locator/service_locator.dart';
-import '../../core/domain/commom/product.dart';
-import '../state/favorite_list_store.dart';
-import '../styles/styles.dart';
+import '../../../../configs/service_locator/service_locator.dart';
+import '../../../../core/domain/commom/product.dart';
+import '../../../styles/styles.dart';
+import '../favorite_list_store.dart';
 
 class FavoriteProductButton extends StatefulWidget {
   const FavoriteProductButton({

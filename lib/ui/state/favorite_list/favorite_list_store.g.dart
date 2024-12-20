@@ -41,19 +41,19 @@ mixin _$FavoriteListStore on FavoriteListStoreBase, Store {
     });
   }
 
-  late final _$stateAtom =
-      Atom(name: 'FavoriteListStoreBase.state', context: context);
+  late final _$statusAtom =
+      Atom(name: 'FavoriteListStoreBase.status', context: context);
 
   @override
-  FavoriteListStoreState get state {
-    _$stateAtom.reportRead();
-    return super.state;
+  FavoriteListStatuses get status {
+    _$statusAtom.reportRead();
+    return super.status;
   }
 
   @override
-  set state(FavoriteListStoreState value) {
-    _$stateAtom.reportWrite(value, super.state, () {
-      super.state = value;
+  set status(FavoriteListStatuses value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
     });
   }
 
@@ -125,7 +125,7 @@ mixin _$FavoriteListStore on FavoriteListStoreBase, Store {
     return '''
 products: ${products},
 prevProducts: ${prevProducts},
-state: ${state},
+status: ${status},
 errorMessage: ${errorMessage}
     ''';
   }

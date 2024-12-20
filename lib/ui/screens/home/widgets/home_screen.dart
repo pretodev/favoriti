@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../configs/service_locator/service_locator.dart';
 import '../../../../core/domain/commom/product.dart';
 import '../../../../shared/debouncer.dart';
-import '../../../routes.dart';
+import '../../../routing/routes.dart';
 import '../../../styles/styles.dart';
 import '../../../widgets/product_list_item.dart';
 import '../home_store.dart';

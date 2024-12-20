@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../configs/service_locator/service_locator.dart';
-import '../../../state/favorite_list_store.dart';
+import '../../../state/favorite_list/favorite_list_store.dart';
 import '../../../widgets/product_list_item.dart';
 
 class FavoritesScreen extends StatefulWidget {

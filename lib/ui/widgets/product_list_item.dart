@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/domain/commom/product.dart';
+import '../state/favorite_list/widgets/favorite_product_button.dart';
 import '../styles/styles.dart';
-import 'favorite_product_button.dart';
 import 'rating_view.dart';
 
 class ProductListItem extends StatelessWidget {

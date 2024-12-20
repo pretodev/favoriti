@@ -1,19 +1,22 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../configs/service_locator/service_locator.dart';
-import 'screens/favorite/widgets/favorites_screen.dart';
-import 'screens/home/widgets/home_screen.dart';
-import 'screens/product_details/widgets/product_details_screen.dart';
+import '../screens/failures/widgets/conection_failure_screen.dart';
+import '../screens/favorite/widgets/favorites_screen.dart';
+import '../screens/home/widgets/home_screen.dart';
+import '../screens/product_details/widgets/product_details_screen.dart';
+import 'redirection.dart';
 
-final class Routes with ServiceLocatorMixin {
+final class Routes {
   static const _products = 'products';
   static const _favorites = 'favorites';
+  static const _failures = 'failures';
 
-  static const home = '/';
+  static const splash = '/';
   static const products = '/$_products';
   static String productDetails(int id) => '/$_products/$id';
   static const favorites = '/$_favorites';
+  static const failuresConnectivity = '/$_failures/connectivity';
 
   static GoRouter get routerConfig => Routes._()._router;
 
@@ -22,13 +25,18 @@ final class Routes with ServiceLocatorMixin {
   Routes._();
 
   GoRouter get _router {
+    final redirection = Redirection();
     return GoRouter(
-      initialLocation: home,
+      initialLocation: splash,
       debugLogDiagnostics: true,
       navigatorKey: _navigatorKey,
       routes: [
         GoRoute(
-          path: home,
+          path: splash,
+          builder: (context, state) => const SizedBox(),
+        ),
+        GoRoute(
+          path: products,
           builder: (context, state) => const HomeScreen(),
         ),
         GoRoute(
@@ -40,9 +48,15 @@ final class Routes with ServiceLocatorMixin {
         ),
         GoRoute(
           path: favorites,
-          builder: (context, state) => FavoritesScreen(),
+          builder: (context, state) => const FavoritesScreen(),
+        ),
+        GoRoute(
+          path: failuresConnectivity,
+          builder: (context, state) => const ConectionFailureScreen(),
         ),
       ],
+      refreshListenable: redirection,
+      redirect: redirection.redirect,
     );
   }
 }

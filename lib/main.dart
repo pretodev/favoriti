@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
 import 'configs/application.dart';
@@ -11,10 +12,11 @@ import 'data/repositories/favorite_repository_impl.dart';
 import 'data/services/api/api_client.dart';
 import 'data/services/cache/cache_manager.dart';
 import 'data/services/local/local_favorite_product_list.dart';
-import 'ui/routes.dart';
-import 'ui/state/favorite_list_store.dart';
+import 'ui/notifications/notificator.dart';
+import 'ui/routing/routes.dart';
+import 'ui/state/connectivity/connectivity_store.dart';
+import 'ui/state/favorite_list/favorite_list_store.dart';
 import 'ui/styles/styles.dart';
-import 'ui/widgets/notificator.dart';
 
 void main() async {
   buildApp(
@@ -23,6 +25,9 @@ void main() async {
       ServiceLocatorBoot(
         bind: (i) {
           i.addInstance(Environment.initialize());
+
+          // drivers
+          i.addLazySingleton(Connectivity.new);
 
           // services
           i.addLazySingleton(ApiClient.new);
@@ -39,6 +44,7 @@ void main() async {
 
           // global stores
           i.addLazySingleton(FavoriteListStore.new);
+          i.addLazySingleton(ConnectivityStore.new);
         },
       ),
     ],
@@ -55,12 +61,7 @@ class MainApp extends StatelessWidget {
       title: 'Favoriti',
       theme: Styles.theme,
       routerConfig: Routes.routerConfig,
-      builder: (context, child) {
-        if (child == null) {
-          return const SizedBox();
-        }
-        return Notificator(child: child);
-      },
+      builder: Notificator.builder,
     );
   }
 }
