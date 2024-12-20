@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import '../../../../core/domain/commom/price.dart';
+import '../../../../core/domain/commom/product.dart';
 import '../../../../core/domain/commom/rating.dart';
-import '../../../../core/domain/product/product.dart';
 import '../../../converter.dart';
 import '../cached_data.dart';
 

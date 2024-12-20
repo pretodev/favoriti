@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../core/domain/product/product.dart';
+import '../../../core/domain/commom/product.dart';
 import 'converters/local_favorite_product_converters.dart';
 
 class LocalFavoriteProductList {

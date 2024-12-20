@@ -1,17 +1,17 @@
 import 'package:mobx/mobx.dart';
 
-import '../../../core/domain/product/product.dart';
-import '../../../core/domain/product/product_repository.dart';
+import '../../../core/domain/catalog/product_repository.dart';
+import '../../../core/domain/commom/product.dart';
 
 part 'product_details_store.g.dart';
 
 class ProductDetailsStore = ProductDetailsStoreBase with _$ProductDetailsStore;
 
 abstract class ProductDetailsStoreBase with Store {
-  final ProductRepository _productRepository;
+  final CatalogRepository _productRepository;
 
   ProductDetailsStoreBase({
-    required ProductRepository productRepository,
+    required CatalogRepository productRepository,
   }) : _productRepository = productRepository;
 
   @observable
@@ -28,7 +28,7 @@ abstract class ProductDetailsStoreBase with Store {
 
   void loadProduct(int productId) async {
     loading = true;
-    final result = await _productRepository.getFromId(productId);
+    final result = await _productRepository.getProductFromId(productId);
     result.onSuccess(productLoaded);
   }
 }

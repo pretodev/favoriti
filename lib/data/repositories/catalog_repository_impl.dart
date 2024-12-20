@@ -1,12 +1,12 @@
 import 'package:result_dart/result_dart.dart';
 
-import '../../core/domain/product/product.dart';
-import '../../core/domain/product/product_repository.dart';
+import '../../core/domain/catalog/product_repository.dart';
+import '../../core/domain/commom/product.dart';
 import '../services/api/api_client.dart';
 import '../services/cache/cache_manager.dart';
 
-class ProductRepositoryImpl implements ProductRepository {
-  ProductRepositoryImpl({
+class CatalogRepositoryImpl implements CatalogRepository {
+  CatalogRepositoryImpl({
     required ApiClient apiClient,
     required CacheManager cacheManager,
   })  : _apiClient = apiClient,
@@ -18,7 +18,7 @@ class ProductRepositoryImpl implements ProductRepository {
   static const _cacheDuration = Duration(minutes: 5);
 
   @override
-  AsyncResult<List<Product>> getAll() async {
+  AsyncResult<List<Product>> getProducts() async {
     final products = await _apiClient.getProducts();
     for (final product in products) {
       await _cacheManager.saveProduct(product, _cacheDuration);
@@ -27,7 +27,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  AsyncResult<Product> getFromId(int productId) async {
+  AsyncResult<Product> getProductFromId(int productId) async {
     final cached = await _cacheManager.getProduct(productId);
     if (cached != null && cached.expireAt.isAfter(DateTime.now())) {
       return Success(cached.value);

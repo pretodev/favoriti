@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../configs/environment.dart';
-import '../../../core/domain/product/product.dart';
+import '../../../core/domain/commom/product.dart';
 import 'converters/api_product_converters.dart';
 
 class ApiClient {

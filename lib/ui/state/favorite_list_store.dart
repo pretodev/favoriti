@@ -1,8 +1,8 @@
 import 'package:mobx/mobx.dart';
 import 'package:result_dart/result_dart.dart';
 
-import '../../core/domain/favorite_product/favorite_product_repository.dart';
-import '../../core/domain/product/product.dart';
+import '../../core/domain/commom/product.dart';
+import '../../core/domain/favorite/favorite_repository.dart';
 
 part 'favorite_list_store.g.dart';
 
@@ -19,10 +19,10 @@ enum FavoriteListStoreState {
 class FavoriteListStore = FavoriteListStoreBase with _$FavoriteListStore;
 
 abstract class FavoriteListStoreBase with Store {
-  final FavoriteProductRepository _favoriteProductRepository;
+  final FavoriteRepository _favoriteProductRepository;
 
   FavoriteListStoreBase({
-    required FavoriteProductRepository favoriteProductRepository,
+    required FavoriteRepository favoriteProductRepository,
   }) : _favoriteProductRepository = favoriteProductRepository {
     loadProducts();
   }
@@ -87,10 +87,10 @@ abstract class FavoriteListStoreBase with Store {
         (stored) => stored.id != product.id,
       );
       saving(newlist.toList());
-      result = _favoriteProductRepository.remove(product);
+      result = _favoriteProductRepository.removeProduct(product);
     } else {
       saving([product, ...prevList]);
-      result = _favoriteProductRepository.add(product);
+      result = _favoriteProductRepository.addProduct(product);
     }
     await result //
         .onSuccess(saved)
@@ -99,7 +99,7 @@ abstract class FavoriteListStoreBase with Store {
 
   void loadProducts() async {
     await _favoriteProductRepository //
-        .getAll()
+        .getProducts()
         .onSuccess(loaded)
         .onFailure(error);
   }

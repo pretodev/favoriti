@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../configs/service_locator/service_locator.dart';
-import '../../../../core/domain/product/product.dart';
+import '../../../../core/domain/commom/product.dart';
 import '../../../../shared/debouncer.dart';
 import '../../../routes.dart';
 import '../../../styles/styles.dart';
