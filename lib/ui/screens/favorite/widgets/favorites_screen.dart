@@ -6,6 +6,7 @@ import '../../../state/favorite_list/favorite_list_store.dart';
 import '../../../widgets/product_list_item.dart';
 import 'dismissible_delete_background.dart';
 import 'dismissible_indicator.dart';
+import 'favorites_empty.dart';
 
 class FavoritesScreen extends StatelessWidget with ServiceLocatorMixin {
   const FavoritesScreen({super.key});
@@ -19,6 +20,10 @@ class FavoritesScreen extends StatelessWidget with ServiceLocatorMixin {
       body: Observer(
         builder: (context) {
           final products = instance<FavoriteListStore>().products;
+          if (products.isEmpty) {
+            return FavoritesEmpty();
+          }
+
           return ListView.builder(
             itemCount: products.length,
             itemBuilder: (context, index) {
