@@ -31,10 +31,7 @@ class _DismissibleIndicatorState extends State<DismissibleIndicator>
     ).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
-    _controller.repeat(reverse: true);
-    Future.delayed(Duration(milliseconds: 2 * 800), () {
-      _controller.stop();
-    });
+    _controller.repeat(reverse: true, count: 2);
   }
 
   @override
