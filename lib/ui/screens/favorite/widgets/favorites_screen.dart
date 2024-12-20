@@ -4,17 +4,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../../configs/service_locator/service_locator.dart';
 import '../../../state/favorite_list/favorite_list_store.dart';
 import '../../../widgets/product_list_item.dart';
+import 'dismissible_delete_background.dart';
+import 'dismissible_indicator.dart';
 
-class FavoritesScreen extends StatefulWidget {
+class FavoritesScreen extends StatelessWidget with ServiceLocatorMixin {
   const FavoritesScreen({super.key});
-
-  @override
-  State<FavoritesScreen> createState() => _FavoritesScreenState();
-}
-
-class _FavoritesScreenState extends State<FavoritesScreen>
-    with ServiceLocatorMixin {
-  late final _favoritesStore = instance<FavoriteListStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +18,34 @@ class _FavoritesScreenState extends State<FavoritesScreen>
       ),
       body: Observer(
         builder: (context) {
-          final products = _favoritesStore.products;
+          final products = instance<FavoriteListStore>().products;
           return ListView.builder(
             itemCount: products.length,
             itemBuilder: (context, index) {
               final product = products[index];
-              return ProductListItem(product: product);
+              if (index == 0) {
+                return DismissibleIndicator(
+                  child: Dismissible(
+                    key: ValueKey(product.id),
+                    direction: DismissDirection.endToStart,
+                    background: DismissibleDeleteBackground(),
+                    child: ProductListItem(product: product),
+                    onDismissed: (_) {
+                      instance<FavoriteListStore>().removeProduct(product);
+                    },
+                  ),
+                );
+              }
+
+              return Dismissible(
+                key: ValueKey(product.id),
+                direction: DismissDirection.endToStart,
+                background: DismissibleDeleteBackground(),
+                child: ProductListItem(product: product),
+                onDismissed: (_) {
+                  instance<FavoriteListStore>().removeProduct(product);
+                },
+              );
             },
           );
         },

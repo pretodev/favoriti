@@ -23,55 +23,59 @@ class ProductListItem extends StatelessWidget {
     final Styles(:text, :colors) = context.styles;
     return InkWell(
       onTap: onClicked,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              spacing: 10.0,
-              children: [
-                CachedNetworkImage(
-                  imageUrl: product.imageUrl,
-                  width: 100.0,
-                  height: 100.0,
-                  errorWidget: (context, url, error) => Container(
+      child: Container(
+        color: colors.scaffoldBackground,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                spacing: 10.0,
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: product.imageUrl,
                     width: 100.0,
                     height: 100.0,
-                    color: Colors.black12,
+                    errorWidget: (context, url, error) => Container(
+                      width: 100.0,
+                      height: 100.0,
+                      color: Colors.black12,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    spacing: 1.0,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(product.title, style: text.bodyLarge),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          RatingView(
-                            rate: product.rating.rate,
-                            count: product.rating.count,
-                          ),
-                          favControl
-                              ? FavoriteProductButton(product: product)
-                              : const SizedBox(),
-                        ],
-                      ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        product.price.asCurrency,
-                        style: text.titleSmall.copyWith(color: colors.primary),
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      spacing: 1.0,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(product.title, style: text.bodyLarge),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RatingView(
+                              rate: product.rating.rate,
+                              count: product.rating.count,
+                            ),
+                            favControl
+                                ? FavoriteProductButton(product: product)
+                                : const SizedBox(),
+                          ],
+                        ),
+                        SizedBox(height: 8.0),
+                        Text(
+                          product.price.asCurrency,
+                          style:
+                              text.titleSmall.copyWith(color: colors.primary),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Divider(height: 0.0, color: colors.divider),
-        ],
+            Divider(height: 0.0, color: colors.divider),
+          ],
+        ),
       ),
     );
   }

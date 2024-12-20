@@ -103,4 +103,15 @@ abstract class FavoriteListStoreBase with Store {
         .onSuccess(loaded)
         .onFailure(error);
   }
+
+  void removeProduct(Product product) async {
+    final newlist = products.where(
+      (stored) => stored.id != product.id,
+    );
+    saving(newlist.toList());
+    await _favoriteProductRepository //
+        .removeProduct(product)
+        .onSuccess(saved)
+        .onFailure(error);
+  }
 }
